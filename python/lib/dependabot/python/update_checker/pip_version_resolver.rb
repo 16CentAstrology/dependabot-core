@@ -1,3 +1,4 @@
+# typed: true
 # frozen_string_literal: true
 
 require "dependabot/python/language_version_manager"
@@ -25,19 +26,22 @@ module Dependabot
         end
 
         def latest_resolvable_version_with_no_unlock
-          latest_version_finder.
-            latest_version_with_no_unlock(python_version: language_version_manager.python_version)
+          latest_version_finder
+            .latest_version_with_no_unlock(python_version: language_version_manager.python_version)
         end
 
         def lowest_resolvable_security_fix_version
-          latest_version_finder.
-            lowest_security_fix_version(python_version: language_version_manager.python_version)
+          latest_version_finder
+            .lowest_security_fix_version(python_version: language_version_manager.python_version)
         end
 
         private
 
-        attr_reader :dependency, :dependency_files, :credentials,
-                    :ignored_versions, :security_advisories
+        attr_reader :dependency
+        attr_reader :dependency_files
+        attr_reader :credentials
+        attr_reader :ignored_versions
+        attr_reader :security_advisories
 
         def latest_version_finder
           @latest_version_finder ||= LatestVersionFinder.new(
